@@ -19,7 +19,7 @@ class TamagotchiClass {
         if (this._sleep >= 100 || this._sleep + 20 > 100){
             this._sleep = 100
         }else{
-            this._sleep = this._sleep + 5;
+            this._sleep = this._sleep + 3;
         }
     }
 
@@ -38,7 +38,6 @@ class TamagotchiClass {
         if (this._food <= 0){
             this._food = 0;
         }
-
         this._play -= 1;
         this._food -= 3;
     }

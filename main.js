@@ -1,4 +1,4 @@
-const tamagotchi = new TamagotchiClass(50, 50, 50);
+const Tamagotchi = new TamagotchiClass(50, 50, 50);
 
 //Selector
 const statFood = document.querySelector(".stat-food");
@@ -8,78 +8,75 @@ const buttonSleep = document.querySelector(".sleep");
 const buttonFood = document.querySelector(".food");
 const buttonPlay = document.querySelector(".play");
 let toggle = true;
+let timer;
+
 
 
 //Display
 const display = () => {
-    statFood.innerHTML = `${tamagotchi._food} %`;
-    statSleep.innerHTML = `${tamagotchi._sleep} %`;
-    statPlay.innerHTML = `${tamagotchi._play} %`;
+    statFood.innerHTML = `${Tamagotchi._food} %`;
+    statSleep.innerHTML = `${Tamagotchi._sleep} %`;
+    statPlay.innerHTML = `${Tamagotchi._play} %`;
 }
 display();
 
+
 // Event listener
 buttonSleep.addEventListener('click', e => {
-    e.preventDefault()
-    if (toggle){
-        buttonSleep.innerHTML = "Eteindre la lumiere";
-        toggle = !toggle
-    }else{
+    e.preventDefault();
+    clearInterval(timer);
+    if (toggle) {
         buttonSleep.innerHTML = "Allumer la lumiere";
-        toggle = !toggle
-        increaseSleep();
+        timer = setInterval(() => {
+            Tamagotchi.rest();
+        }, 1000);
     }
-    console.log(toggle);
-    statSleep.innerHTML = tamagotchi._sleep;
+    else {
+        buttonSleep.innerHTML = "Eteindre la lumiere";
+        timer = setInterval(() => {
+            Tamagotchi.decreaseSleep();
+        }, 1000)
+    }
+    toggle = !toggle;
+    statSleep.innerHTML = `${Tamagotchi._sleep} %`;
 })
 
 buttonFood.addEventListener('click', e => {
     e.preventDefault();
-    increaseFood();
-    statFood.innerHTML = tamagotchi._food;
+    Tamagotchi.feed();
+    statFood.innerHTML = `${Tamagotchi._food} %`;
 })
 
 buttonPlay.addEventListener('click', e => {
     e.preventDefault();
-    increasePlay();
-    statPlay.innerHTML = tamagotchi._play;
+    Tamagotchi.playing();
+    statPlay.innerHTML = `${Tamagotchi._play} %`;
 })
 
 
 // Timeout
 
 setInterval(() => {
-    tamagotchi.decrease();
-    if (toggle){
-        tamagotchi.decreaseSleep();
+    Tamagotchi.decrease();
+    if (toggle) {
+        Tamagotchi.decreaseSleep();
     }
-
     display();
-    if (tamagotchi._food <= 0){
+    if (Tamagotchi._food <= 0) {
         statFood.innerHTML = "J'ai faim !!!";
     }
-    if (tamagotchi._sleep <= 0){
+    if (Tamagotchi._sleep <= 0) {
         statSleep.innerHTML = "Je veux dormir !!!";
     }
-    if (tamagotchi._play <= 0) {
+    if (Tamagotchi._play <= 0) {
         statPlay.innerHTML = "Je veux jouer !!!"
     }
+
 }, 1000)
 
 
 // Function increase
 
-const increaseSleep = () => {
-    setInterval(() => {
-        tamagotchi.rest();
-    }, 500)
 
-}
-const increaseFood = () => {
-    tamagotchi.feed();
-}
-const increasePlay = () => {
-    tamagotchi.playing();
-}
 
 

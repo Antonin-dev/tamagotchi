@@ -2,33 +2,33 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Exo 1 HTML</title>
+    <title>TAMAGOTCHIL</title>
+    <link href="https://unpkg.com/tailwindcss@%5E2/dist/tailwind.min.css" rel="stylesheet">
 </head>
 <body>
-<h1>TAMAGOTCHI</h1>
-<div class="container-button">
-    <div class="container-stats">
-        <div>
-            Nouriture : <span class="stat-food"></span>
-        </div>
+<div class="main-container w-100 bg-blue-300 text-center rounded-3xl mx-4 min-h-screen p-2">
+    <h1 class="text-lg mb-4">TAMAGOTCHI</h1>
+    <div class="container-button">
+        <div class="container-stats flex flex-row justify-around">
+            <div>
+                Nouriture : <span class="stat-food"></span>
+            </div>
 
-        <div>
-            Sommeil : <span class="stat-sleep"></span>
+            <div>
+                Sommeil : <span class="stat-sleep"></span>
+            </div>
+            <div>
+                Divertissement : <span class="stat-play"></span>
+            </div>
         </div>
-        <div>
-            Divertissement : <span class="stat-play"></span>
+        <div class="container-button flex flex-row justify-around">
+            <button class="food rounded-lg border-2 p-2 w-48 mt-4 bg-green-400">Nourir</button>
+            <button class="sleep rounded-lg border-2 p-2 w-48 mt-4 bg-green-400">Eteindre la lumiere</button>
+            <button class="play rounded-lg border-2 p-2 w-48 mt-4 bg-green-400">Jouer</button>
         </div>
-    </div>
-    <div >
-        <button class="food">Nourir</button>
-    </div>
-    <div >
-        <button class="sleep">Eteindre la lumiere</button>
-    </div>
-    <div >
-        <button class="play">Jouer</button>
     </div>
 </div>
+
 <script src="TamagotchiClass.js"></script>
 <script src="main.js"></script>
 
