@@ -1,4 +1,4 @@
-class TamagotchiClass {
+export class TamagotchiClass {
 
     constructor(food, sleep, play) {
 
