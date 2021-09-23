@@ -16,7 +16,7 @@ export class TamagotchiClass {
     }
 
     rest () {
-        if (this._sleep >= 100 || this._sleep + 20 > 100){
+        if (this._sleep >= 100 || this._sleep + 3 > 100){
             this._sleep = 100
         }else{
             this._sleep = this._sleep + 3;
@@ -34,18 +34,23 @@ export class TamagotchiClass {
     decrease() {
         if (this._play <= 0){
             this._play = 0;
+        }else{
+            this._play -= 6;
         }
         if (this._food <= 0){
             this._food = 0;
+        }else{
+            this._food -= 5;
         }
-        this._play -= 1;
-        this._food -= 3;
+
     }
 
     decreaseSleep() {
         if (this._sleep <= 0){
             this._sleep = 0;
+        }else{
+            this._sleep -= 4;
         }
-        this._sleep -= 3;
+
     }
 }

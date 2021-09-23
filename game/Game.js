@@ -1,92 +1,93 @@
-import {TamagotchiClass} from "./TamagotchiClass";
-
+import {TamagotchiClass} from "./tamagotchiClass.js";
+import {Listener} from "./listener/listener.js";
 
 
 export class Game {
-    start() {
+    constructor() {
+        this.tamagotchi = new TamagotchiClass(50, 50, 50);
+        this.listener = new Listener(this.tamagotchi);
+        this.arrayBar = [
+            {
+                selector: "myBarFood",
+                id: "food",
+            },
+            {
+                selector: "myBarSleep",
+                id: "sleep",
+            },
+            {
+                selector: "myBarPlay",
+                id: "play",
+            }
+        ]
+    }
 
-        const Tamagotchi = new TamagotchiClass(50, 50, 50);
-        //Selector
-        const statFood = document.querySelector(".stat-food");
-        const statSleep = document.querySelector(".stat-sleep");
-        const statPlay = document.querySelector(".stat-play");
-        const buttonSleep = document.querySelector(".sleep");
-        const buttonFood = document.querySelector(".food");
-        const buttonPlay = document.querySelector(".play");
-        let toggle = true;
-        let timer;
+    start() {
+        //listener
+        this.listener.sleep();
+        this.listener.food();
+        this.listener.play();
 
         //Display
         const display = () => {
-            statFood.innerHTML = `${Tamagotchi._food} %`;
-            statSleep.innerHTML = `${Tamagotchi._sleep} %`;
-            statPlay.innerHTML = `${Tamagotchi._play} %`;
+            this.listener.statFood.innerHTML = `${this.tamagotchi._food} %`;
+            this.listener.statSleep.innerHTML = `${this.tamagotchi._sleep} %`;
+            this.listener.statPlay.innerHTML = `${this.tamagotchi._play} %`;
+
+            for (const barElement of this.arrayBar) {
+                switch (barElement.id) {
+                    case "food":
+                        document.getElementById(barElement.selector).style.width = `${this.tamagotchi._food}%`;
+                        break
+                    case "sleep":
+                        document.getElementById(barElement.selector).style.width = `${this.tamagotchi._sleep}%`;
+                        break
+                    case "play":
+                        document.getElementById(barElement.selector).style.width = `${this.tamagotchi._play}%`;
+                        break
+                }
+            }
         }
         display();
 
-        // Event listener
-        buttonSleep.addEventListener('click', e => {
-            e.preventDefault();
-            clearInterval(timer);
-            if (toggle) {
-                buttonSleep.innerHTML = "Allumer la lumiere";
-                timer = setInterval(() => {
-                    Tamagotchi.rest();
-                }, 1000);
-            }
-            else {
-                buttonSleep.innerHTML = "Eteindre la lumiere";
-                buttonSleep.classList.add("night")
-                timer = setInterval(() => {
-                    Tamagotchi.decreaseSleep();
-                }, 1000)
-            }
-            toggle = !toggle;
-            statSleep.innerHTML = `${Tamagotchi._sleep} %`;
-        })
-
-        buttonFood.addEventListener('click', e => {
-            e.preventDefault();
-            Tamagotchi.feed();
-            statFood.innerHTML = `${Tamagotchi._food} %`;
-        })
-
-        buttonPlay.addEventListener('click', e => {
-            e.preventDefault();
-            Tamagotchi.playing();
-            statPlay.innerHTML = `${Tamagotchi._play} %`;
-        })
-
-
-        // Timeout
         setInterval(() => {
-            Tamagotchi.decrease();
-            if (toggle) {
-                Tamagotchi.decreaseSleep();
+            this.tamagotchi.decrease();
+            if (this.listener.toggle) {
+                this.tamagotchi.decreaseSleep();
             }
             display();
-            if (Tamagotchi._food <= 20) {
-                buttonFood.classList.remove("bg-green-400");
-                buttonFood.classList.add("bg-red-400")
-                if (Tamagotchi._food <= 0) {
-                    statFood.innerHTML = "J'ai faim !!!";
-                }
-            }
-            if (Tamagotchi._sleep <= 20) {
-                buttonSleep.classList.remove("bg-green-400");
-                buttonSleep.classList.add("bg-red-400")
-                if (Tamagotchi._sleep <= 0) {
-                    statSleep.innerHTML = "Je veux dormir !!!";
-                }
-            }
-            if (Tamagotchi._play <= 20) {
-                buttonPlay.classList.remove("bg-green-400");
-                buttonPlay.classList.add("bg-red-400")
-                if (Tamagotchi._play <= 0) {
-                    statPlay.innerHTML = "J'ai faim !!!";
-                }
-            }
-        }, 1000)
 
+            if (this.tamagotchi._play === 0 && this.tamagotchi._sleep === 0 && this.tamagotchi._food === 0) {
+                document.querySelector(".img-tamagotchi").style.backgroundImage = "url('./img/svg/dead.svg')";
+                this.listener.statFood.innerHTML = "💀";
+                this.listener.statSleep.innerHTML = "💀";
+                this.listener.statPlay.innerHTML = "💀";
+            }
+            else {
+                if (this.tamagotchi._food <= 20) {
+                    document.querySelector(".img-tamagotchi").style.backgroundImage = "url('./img/svg/neutral.svg')";
+                    if (this.tamagotchi._food <= 0) {
+                        document.querySelector(".img-tamagotchi").style.backgroundImage = "url('./img/svg/sad.svg')";
+                        this.listener.statFood.innerHTML = "J'ai faim !!!";
+                    }
+                }
+                if (this.tamagotchi._sleep <= 20) {
+                    document.querySelector(".img-tamagotchi").style.backgroundImage = "url('./img/svg/neutral.svg')";
+                    if (this.tamagotchi._sleep <= 0) {
+                        document.querySelector(".img-tamagotchi").style.backgroundImage = "url('./img/svg/sad.svg')";
+                        this.listener.statSleep.innerHTML = "Je veux dormir !!!";
+                    }
+                }
+                if (this.tamagotchi._play <= 20) {
+                    document.querySelector(".img-tamagotchi").style.backgroundImage = "url('./img/svg/neutral.svg')";
+                    if (this.tamagotchi._play <= 0) {
+                        document.querySelector(".img-tamagotchi").style.backgroundImage = "url('./img/svg/sad.svg')";
+                        this.listener.statPlay.innerHTML = "Je veux jouer !!!";
+                    }
+                }
+            }
+
+
+        }, 1000)
     }
 }

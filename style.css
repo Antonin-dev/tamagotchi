@@ -1,0 +1,79 @@
+
+
+/*body{*/
+/*    display: flex;*/
+/*    justify-content: center;*/
+/*    align-items: center;*/
+/*}*/
+.main-container{
+    width: 70%;
+    text-align: center;
+    background-color: rgb(255, 237, 7);
+    height: 500px;
+    /*display: flex;*/
+    /*flex-direction: column;*/
+    border-radius: 10%;
+}
+
+.container{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    height: 100%;
+}
+
+.container-stats{
+    display: flex;
+    justify-content: space-around;
+    width: 100%;
+
+}
+
+
+
+.item-stat{
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+    align-items: center;
+    height: 100px;
+}
+
+
+.item-stat img {
+    width: 50px;
+    border-radius: 50%;
+}
+
+
+
+/*Progression bar*/
+
+#myProgressSleep, #myProgressPlay, #myProgressFood {
+    width: 200px;
+    background-color: rgb(204, 198, 198);
+    border-radius: 10px;
+    border: 1px solid grey;
+}
+
+#myBarFood, #myBarPlay, #myBarSleep {
+    width: 100%;
+    background-color: rgb(2, 173, 2);
+    height: 20px;
+    border-radius: 10px;
+}
+
+
+/*Image tamagotchi*/
+
+.img-tamagotchi{
+    align-self: center;
+    background-image: url("./img/svg/happySmiley.svg");
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    width: 200px;
+    height: 200px;
+    margin-bottom: 20px;
+}
